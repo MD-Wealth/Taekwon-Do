@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Taekwon-Do Terranova · Winterthur</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Lato:wght@300;400;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0b;
+  --bg2:#111113;
+  --bg3:#18181b;
+  --red:#c0182a;
+  --red2:#e01f35;
+  --red-lo:rgba(192,24,42,.12);
+  --red-bd:rgba(192,24,42,.3);
+  --gold:#c8a84b;
+  --txt:#e8e4dc;
+  --mu:#6b6357;
+  --ease:cubic-bezier(.25,.46,.45,.94);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--txt);font-family:'Lato',sans-serif;font-size:17px;font-weight:300;line-height:1.85;overflow-x:hidden;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--red-bd);}
+p{margin-bottom:1.2rem;}
+h2{font-family:'Oswald',sans-serif;font-size:2.2rem;font-weight:600;color:var(--txt);letter-spacing:.04em;margin:2.5rem 0 1rem;text-transform:uppercase;}
+h3{font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:400;color:var(--red2);letter-spacing:.15em;text-transform:uppercase;margin:2rem 0 .6rem;}
+em{color:var(--red2);font-style:italic;}
+blockquote{border-left:3px solid var(--red);margin:2rem 0;padding:.4rem 0 .4rem 1.8rem;font-style:italic;font-size:1.1rem;color:var(--txt);opacity:.85;line-height:1.7;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;padding:0 2rem;background:rgba(10,10,11,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--red-bd);gap:1.5rem;}
+.nav-logo{display:flex;align-items:center;gap:.8rem;cursor:pointer;flex-shrink:0;text-decoration:none;}
+.nav-logo img{width:40px;height:40px;object-fit:contain;}
+.nav-logo-text{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.25em;color:var(--txt);text-transform:uppercase;line-height:1.2;}
+.nav-logo-text small{display:block;font-size:9px;letter-spacing:.4em;color:var(--mu);font-weight:300;}
+.nav-links{flex:1;display:flex;align-items:center;justify-content:center;gap:0;}
+.nav-links button{background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;padding:.3rem .9rem;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.25em;color:var(--mu);text-transform:uppercase;transition:color .2s,border-color .2s;white-space:nowrap;}
+.nav-links button:hover,.nav-links button.active{color:var(--red2);border-bottom-color:var(--red2);}
+.nav-insta{display:flex;align-items:center;gap:.5rem;color:var(--mu);text-decoration:none;font-size:11px;font-family:'Oswald',sans-serif;letter-spacing:.15em;flex-shrink:0;transition:color .2s;}
+.nav-insta:hover{color:var(--red2);}
+
+/* ── PAGES ── */
+.page{display:none;min-height:100vh;padding-top:64px;padding-bottom:36px;}
+.page.active{display:block;}
+
+/* ── HERO ── */
+.home-hero{position:relative;height:100vh;display:flex;align-items:center;overflow:hidden;}
+.home-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center top;}
+.home-hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,11,.88) 40%,rgba(10,10,11,.55) 100%),linear-gradient(to bottom,rgba(10,10,11,.4) 0%,transparent 30%,rgba(10,10,11,.8) 100%);}
+.home-hero-content{position:relative;z-index:1;padding:0 4rem;max-width:700px;}
+.hero-eyebrow{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.6em;color:var(--red2);text-transform:uppercase;margin-bottom:1.2rem;}
+.hero-title{font-family:'Oswald',sans-serif;font-size:clamp(3rem,8vw,6rem);font-weight:700;line-height:.95;text-transform:uppercase;color:var(--txt);margin-bottom:1.5rem;}
+.hero-title span{display:block;color:var(--red2);}
+.hero-sub{font-size:1.05rem;color:rgba(232,228,220,.75);max-width:480px;line-height:1.8;margin-bottom:2.5rem;}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-red{background:var(--red);color:#fff;border:none;padding:.85rem 2.2rem;font-family:'Oswald',sans-serif;font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+.btn-red:hover{background:var(--red2);}
+.btn-outline{background:transparent;color:var(--txt);border:1px solid rgba(232,228,220,.3);padding:.85rem 2.2rem;font-family:'Oswald',sans-serif;font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;transition:border-color .2s,color .2s;}
+.btn-outline:hover{border-color:var(--txt);}
+.hero-badge{position:absolute;bottom:3rem;right:3rem;z-index:1;opacity:.85;}
+.hero-badge img{width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 0 12px rgba(192,24,42,.4));}
+
+/* ── STATS ── */
+.stats{background:var(--red);display:grid;grid-template-columns:repeat(4,1fr);}
+.stat{padding:1.8rem 1rem;text-align:center;border-right:1px solid rgba(255,255,255,.15);}
+.stat:last-child{border-right:none;}
+.stat .num{font-family:'Oswald',sans-serif;font-size:2.5rem;font-weight:700;color:#fff;line-height:1;}
+.stat .label{font-size:.7rem;letter-spacing:.2em;color:rgba(255,255,255,.7);text-transform:uppercase;margin-top:.3rem;}
+
+/* ── PAGE HERO ── */
+.page-hero{position:relative;height:50vh;min-height:320px;display:flex;align-items:flex-end;padding:0 4rem 3.5rem;overflow:hidden;border-bottom:1px solid var(--red-bd);}
+.page-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;}
+.page-hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,11,.92) 35%,rgba(10,10,11,.6) 100%),linear-gradient(to bottom,rgba(10,10,11,.5) 0%,transparent 40%,rgba(10,10,11,.9) 100%);}
+.page-hero-bigtext{position:absolute;right:-.02em;bottom:-.15em;font-family:'Oswald',sans-serif;font-size:clamp(8rem,18vw,14rem);font-weight:700;color:transparent;-webkit-text-stroke:1px rgba(192,24,42,.08);line-height:1;user-select:none;}
+.page-hero-txt{position:relative;z-index:1;}
+.page-eyebrow{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.55em;color:var(--red2);text-transform:uppercase;margin-bottom:.8rem;}
+.page-title{font-family:'Oswald',sans-serif;font-size:clamp(2.5rem,7vw,4.5rem);font-weight:700;color:var(--txt);text-transform:uppercase;line-height:1;margin-bottom:.4rem;}
+.page-tagline{font-style:italic;color:rgba(232,228,220,.6);font-size:.95rem;}
+
+/* ── CONTENT ── */
+.content{max-width:900px;margin:0 auto;padding:4rem 2rem 6rem;}
+.content-wide{max-width:1100px;margin:0 auto;padding:4rem 2rem 6rem;}
+
+/* ── DIVIDER ── */
+.divider{display:flex;align-items:center;gap:1rem;margin:2.5rem 0;opacity:.3;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--red);}
+.divider svg{flex-shrink:0;}
+
+/* ── SECTION LABEL ── */
+.sec-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.5em;color:var(--red2);text-transform:uppercase;margin-bottom:.5rem;}
+.sec-title{font-family:'Oswald',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:600;text-transform:uppercase;color:var(--txt);margin-bottom:.6rem;}
+.sec-sub{color:var(--mu);font-style:italic;margin-bottom:2.5rem;font-size:.95rem;}
+
+/* ── KAMPFKUNST (HOME) ── */
+.kampf-section{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--red-bd);border:1px solid var(--red-bd);margin:4rem 0;}
+.kampf-text{background:var(--bg2);padding:3rem;}
+.kampf-img{overflow:hidden;height:100%;min-height:400px;}
+.kampf-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.75) saturate(.85);}
+
+/* ── PROBETRAINING BOX ── */
+.probe{background:var(--red);padding:3rem 4rem;margin:4rem 0;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;}
+.probe h2{margin:0;color:#fff;font-size:1.8rem;}
+.probe p{color:rgba(255,255,255,.8);margin:0;}
+.probe .btn-white{background:#fff;color:var(--red);border:none;padding:.85rem 2.2rem;font-family:'Oswald',sans-serif;font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;flex-shrink:0;transition:opacity .2s;}
+.probe .btn-white:hover{opacity:.85;}
+
+/* ── BLOG GRID ── */
+.blog-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--red-bd);border:1px solid var(--red-bd);cursor:pointer;}
+.blog-card{background:var(--bg);display:flex;flex-direction:column;transition:background .2s;overflow:hidden;}
+.blog-card:hover{background:var(--bg2);}
+.blog-card-img{height:220px;overflow:hidden;}
+.blog-card-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.7) saturate(.8);transition:transform .4s var(--ease);}
+.blog-card:hover .blog-card-img img{transform:scale(1.04);}
+.blog-card-body{padding:1.8rem;flex:1;display:flex;flex-direction:column;gap:.6rem;}
+.blog-card-date{font-family:'Oswald',sans-serif;font-size:.6rem;letter-spacing:.3em;color:var(--red2);text-transform:uppercase;}
+.blog-card-title{font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:600;color:var(--txt);line-height:1.3;text-transform:uppercase;}
+.blog-card-excerpt{font-size:.85rem;color:var(--mu);line-height:1.7;flex:1;}
+.blog-card-read{font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:.3em;color:var(--red2);text-transform:uppercase;margin-top:.5rem;}
+
+/* ── BLOG POST ── */
+.blog-back{display:flex;align-items:center;gap:.5rem;background:none;border:none;cursor:pointer;font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:.3em;color:var(--mu);text-transform:uppercase;margin-bottom:2rem;padding:0;transition:color .2s;}
+.blog-back:hover{color:var(--red2);}
+.blog-post-title{font-family:'Oswald',sans-serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;text-transform:uppercase;color:var(--txt);margin-bottom:.5rem;line-height:1.1;}
+.blog-post-meta{font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:.3em;color:var(--red2);text-transform:uppercase;margin-bottom:2.5rem;border-bottom:1px solid var(--red-bd);padding-bottom:1.5rem;}
+.blog-post-img{width:100%;height:380px;object-fit:cover;filter:brightness(.72) saturate(.8);margin-bottom:2.5rem;}
+.blog-quote{background:var(--bg2);border-left:3px solid var(--red);padding:1.5rem 2rem;margin:2rem 0;font-style:italic;font-size:1.1rem;line-height:1.75;}
+
+/* ── VIDEO GRID ── */
+.video-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:2rem 0;}
+.video-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.35em;color:var(--mu);text-transform:uppercase;margin-top:.4rem;}
+.video-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.35em;color:var(--mu);text-transform:uppercase;margin-top:.4rem;}
+
+/* ── CENTER PAGE ── */
+.center-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--red-bd);border:1px solid var(--red-bd);margin:2.5rem 0;}
+.center-cell{background:var(--bg);padding:2.5rem;}
+.center-cell img{width:100%;height:320px;object-fit:cover;filter:brightness(.75) saturate(.8);}
+.info-row{display:flex;align-items:flex-start;gap:1rem;padding:.8rem 0;border-bottom:1px solid rgba(192,24,42,.1);}
+.info-row:last-child{border-bottom:none;}
+.info-row .icon{color:var(--red2);font-size:1rem;flex-shrink:0;margin-top:.1rem;}
+.info-row .val{font-size:.95rem;}
+.info-row .val a{color:var(--red2);text-decoration:none;}
+.stundenplan{background:var(--bg2);border:1px solid var(--red-bd);margin:2rem 0;overflow:hidden;}
+.stunden-header{background:var(--red);padding:1rem 1.5rem;font-family:'Oswald',sans-serif;font-size:.75rem;letter-spacing:.3em;color:#fff;text-transform:uppercase;}
+.stunden-row{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid rgba(192,24,42,.15);}
+.stunden-row:last-child{border-bottom:none;}
+.stunden-row.header{background:var(--bg3);}
+.stunden-cell{padding:.7rem 1.2rem;font-size:.85rem;}
+.stunden-row.header .stunden-cell{font-family:'Oswald',sans-serif;font-size:.6rem;letter-spacing:.25em;color:var(--red2);text-transform:uppercase;}
+
+/* ── INFOBOX ── */
+.infobox{background:var(--bg2);border:1px solid var(--red-bd);border-left:3px solid var(--red);padding:1.4rem 1.8rem;margin:2rem 0;}
+.infobox .il{font-family:'Oswald',sans-serif;font-size:.6rem;letter-spacing:.4em;color:var(--red2);text-transform:uppercase;margin-bottom:.6rem;}
+
+/* ── PAGE NAV ── */
+.page-nav{display:flex;justify-content:space-between;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--red-bd);gap:1rem;}
+.pnbtn{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:.3rem;padding:.5rem 0;transition:opacity .2s;}
+.pnbtn:hover{opacity:.6;}
+.pnbtn .dir{font-family:'Oswald',sans-serif;font-size:.58rem;letter-spacing:.3em;color:var(--mu);text-transform:uppercase;}
+.pnbtn .nm{font-family:'Oswald',sans-serif;font-size:1.3rem;font-weight:600;color:var(--red2);text-transform:uppercase;}
+.pnbtn.right{text-align:right;align-items:flex-end;}
+
+/* ── FOOTER ── */
+footer{background:var(--bg2);border-top:1px solid var(--red-bd);padding:3rem 2rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;max-width:1100px;margin:0 auto;}
+.footer-brand{display:flex;flex-direction:column;gap:1rem;}
+.footer-brand img{width:60px;height:60px;object-fit:contain;}
+.footer-brand p{font-size:.8rem;color:var(--mu);line-height:1.7;}
+.footer-col h4{font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:.4em;color:var(--red2);text-transform:uppercase;margin-bottom:1rem;}
+.footer-col p,.footer-col a{font-size:.85rem;color:var(--mu);line-height:1.9;display:block;text-decoration:none;transition:color .2s;}
+.footer-col a:hover{color:var(--red2);}
+.footer-bottom{background:var(--bg2);border-top:1px solid rgba(192,24,42,.1);padding:1.2rem 2rem;display:flex;justify-content:space-between;align-items:center;}
+.footer-bottom p{font-family:'Oswald',sans-serif;font-size:.6rem;letter-spacing:.3em;color:var(--mu);text-transform:uppercase;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .nav-links{display:none;}
+  .home-hero-content{padding:0 2rem;}
+  .page-hero{padding:0 2rem 2.5rem;height:44vh;}
+  .kampf-section,.center-grid,.video-grid,.blog-grid{grid-template-columns:1fr;}
+  .stats{grid-template-columns:repeat(2,1fr);}
+  .probe{flex-direction:column;padding:2rem;}
+  footer{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;gap:.5rem;}
+  .content{padding:2.5rem 1.5rem 4rem;}
+  .content-wide{padding:2.5rem 1.5rem 4rem;}
+  .hero-badge{display:none;}
+  .blog-post-img{height:240px;}
+}
+
+/* ── LEGAL BAR (fixed) ── */
+#legal-bar{position:fixed;bottom:0;left:0;right:0;z-index:300;background:rgba(10,10,11,.96);border-top:1px solid rgba(192,24,42,.2);padding:.55rem 2rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;backdrop-filter:blur(8px);}
+#legal-bar p{font-family:'Oswald',sans-serif;font-size:.55rem;letter-spacing:.25em;color:var(--mu);text-transform:uppercase;}
+#legal-bar .legal-links{display:flex;gap:1.5rem;justify-content:center;}
+#legal-bar .legal-links a{font-family:'Oswald',sans-serif;font-size:.55rem;letter-spacing:.25em;color:var(--mu);text-transform:uppercase;text-decoration:none;transition:color .2s;cursor:pointer;}
+#legal-bar .legal-links a:hover{color:var(--red2);}
+#legal-bar .legal-url{font-family:'Oswald',sans-serif;font-size:.55rem;letter-spacing:.25em;color:var(--mu);text-transform:uppercase;text-decoration:none;transition:color .2s;text-align:right;}
+#legal-bar .legal-url:hover{color:var(--red2);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+
+<!-- LEGAL BAR -->
+<div id="legal-bar">
+  <p>©2026 Taekwon-Do Terranova Winterthur</p>
+  <div class="legal-links">
+    <a data-goto="impressum">Impressum</a>
+    <a data-goto="datenschutz">Datenschutz</a>
+  </div>
+  <a href="https://www.tkd-winterthur.ch" target="_blank" rel="noopener" class="legal-url">TKD-WINTERTHUR.CH</a>
+</div>
+
+<nav>
+  <div class="nav-logo" data-goto="home">
+    <img src="https://md-wealth.github.io/Mario/img_1.jpg" alt="Terranova Logo">
+    <div class="nav-logo-text">Taekwon-Do<small>Terranova · Winterthur</small></div>
+  </div>
+  <div class="nav-links">
+    <button class="active" data-goto="home">Willkommen</button>
+    <button data-goto="center">Center Winterthur</button>
+    <button data-goto="videos">Videos</button>
+    <button data-goto="blog">Blog</button>
+    <button data-goto="kontakt">Kontakt</button>
+  </div>
+  <a class="nav-insta" href="https://www.instagram.com/traditionaltkdwinterthur/" target="_blank">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+    Instagram
+  </a>
+</nav>
+
+<!-- ══════ HOME ══════ -->
+<div id="page-home" class="page active">
+  <div class="home-hero">
+    <div class="home-hero-bg" style="background-image:url('https://static.wixstatic.com/media/7e456c_31d3cdcfec68402aab63b827e0c3fd24~mv2.jpg/v1/fill/w_1920,h_900,al_c,q_85,enc_avif,quality_auto/7e456c_31d3cdcfec68402aab63b827e0c3fd24~mv2.jpg');"></div>
+    <div class="home-hero-overlay"></div>
+    <div class="home-hero-content">
+      <p class="hero-eyebrow">Kampfkunstschule für<br>Traditionelles Taekwon-Do</p>
+      <h1 class="hero-title">
+        Taekwon-Do
+        <span>Winterthur</span>
+      </h1>
+      <p class="hero-sub">Bei der Kampfkunst steht unsere Gesundheit an erster Stelle. Kein Wettbewerbsdenken — der Fokus liegt auf deinen individuellen Fähigkeiten.</p>
+      <div class="hero-ctas">
+        <button class="btn-red" data-goto="kontakt">Probetraining vereinbaren</button>
+        <button class="btn-outline" data-goto="center">Schule entdecken</button>
+      </div>
+    </div>
+    <div class="hero-badge">
+      <img src="https://md-wealth.github.io/Mario/img_2.jpg" alt="Taekwon-Do Terranova">
+    </div>
+  </div>
+
+  <div class="stats" style="position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;z-index:0;">
+      <img src="https://md-wealth.github.io/Mario/img_3.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:brightness(.25) saturate(.6);">
+      <div style="position:absolute;inset:0;background:rgba(192,24,42,.55);"></div>
+    </div>
+    <style>.stat{position:relative;z-index:1;}</style>
+    <div class="stat"><div class="num">70+</div><div class="label">Schüler</div></div>
+    <div class="stat"><div class="num">3</div><div class="label">Trainingstage / Woche</div></div>
+    <div class="stat"><div class="num">3</div><div class="label">Dan — Mario D'Elena</div></div>
+    <div class="stat"><div class="num">Gratis</div><div class="label">2 Probetrainings</div></div>
+  </div>
+
+  <div class="content-wide" style="padding-top:5rem;">
+    <div class="kampf-section" style="grid-template-columns:5fr 4fr;">
+      <div class="kampf-text">
+        <p class="sec-label">Die Kampfkunst</p>
+        <h2>Körper · Geist · Disziplin</h2>
+        <p>Bei der Kampfkunst steht unsere Gesundheit an erster Stelle. Der Unterricht findet auf die Art statt, dass jede Person, unabhängig von Vorkenntnissen, teilnehmen und sich selbst zu seiner optimalen Fitness bringen kann.</p>
+        <p>Es herrscht kein Wettbewerbsdenken. Der Fokus liegt in der Hervorhebung der individuellen Fähigkeiten, wodurch ein inneres Wohlgefühl entsteht, das den Alltag bestärkt.</p>
+        <p><strong style="color:var(--txt);">Kinder</strong> schulen sich in Geduld, Ausdauer und innerer Ruhe und haben einen Ort, um ihre Energie steuern und anwenden zu lernen.</p>
+        <p><strong style="color:var(--txt);">Erwachsene</strong> können ihr Energieniveau erhöhen, an der Flexibilität und Leistungsfähigkeit arbeiten sowie das Erinnerungsvermögen schulen.</p>
+        <p>Zwei Probetrainings sind gratis — kommen Sie vorbei, überzeugen Sie sich selbst.</p>
+        <button class="btn-red" data-goto="kontakt" style="margin-top:1rem;">Jetzt anmelden</button>
+      </div>
+      <div class="kampf-img" style="min-height:600px;">
+        <img src="https://md-wealth.github.io/Mario/img_4.jpg" alt="Kraft kommt von innen" style="width:100%;height:100%;object-fit:cover;object-position:center 5%;">
+      </div>
+    </div>
+
+    <div style="position:relative;overflow:hidden;margin:4rem 0;min-height:380px;display:flex;align-items:center;">
+      <img src="https://md-wealth.github.io/Mario/img_5.jpg" alt="Dein erster Kick" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%;filter:brightness(.55);">
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,11,.85) 40%,rgba(10,10,11,.3) 100%);"></div>
+      <div style="position:relative;z-index:1;padding:3.5rem 4rem;max-width:600px;">
+        <p style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.5em;color:var(--red2);text-transform:uppercase;margin-bottom:.8rem;">Einstieg</p>
+        <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:700;text-transform:uppercase;color:#fff;line-height:1;margin:0 0 1rem;">DEIN ERSTER KICK.<br><span style="color:var(--red2);">2× GRATIS.</span></h2>
+        <p style="color:rgba(255,255,255,.8);margin-bottom:2rem;max-width:400px;">Jede Person sollte die Chance nutzen, zumindest diese Lebenserfahrung zu machen. Zwei Probetrainings — kostenlos und unverbindlich.</p>
+        <button class="btn-red" data-goto="kontakt" style="font-size:.8rem;padding:1rem 2.5rem;">Probetraining buchen</button>
+      </div>
+    </div>
+
+
+  <div style="background:#000;margin:2rem 0 4rem;width:100%;display:flex;justify-content:center;">
+    <img src="https://md-wealth.github.io/Mario/img_6.jpg" alt="Trainiere deinen Geist. Trainiere deinen Körper." style="width:100%;max-width:800px;height:auto;display:block;">
+  </div>
+
+  <p class="sec-label" style="text-align:center;">Neueste Beiträge</p>
+    <h2 class="sec-title" style="text-align:center;">Aus dem Blog</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--red-bd);border:1px solid var(--red-bd);max-width:900px;margin:1.5rem auto 0;">
+      <div style="background:var(--bg);padding:2.5rem;cursor:pointer;transition:background .2s;" data-goto="blog-bewusstsein"
+        onmouseover="this.style.background='var(--bg2)'" onmouseout="this.style.background='var(--bg)'">
+        <div style="font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.3em;color:var(--red2);text-transform:uppercase;margin-bottom:.8rem;">12. Juni 2023</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:1.4rem;font-weight:600;color:var(--txt);text-transform:uppercase;line-height:1.2;margin-bottom:.8rem;">Bewusstsein · Gewohnheiten · Ebenen</div>
+        <div style="font-size:.88rem;color:var(--mu);line-height:1.75;margin-bottom:1.2rem;">Einfach mal seine Gewohnheiten anzupassen ist etwas, das wenige können. Durch mentale Stärke ist es möglich — doch die meisten sind wie mechanisch gebunden...</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:.25em;color:var(--red2);text-transform:uppercase;">Weiterlesen →</div>
+      </div>
+      <div style="background:var(--bg);padding:2.5rem;cursor:pointer;transition:background .2s;" data-goto="blog-herz"
+        onmouseover="this.style.background='var(--bg2)'" onmouseout="this.style.background='var(--bg)'">
+        <div style="font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.3em;color:var(--red2);text-transform:uppercase;margin-bottom:.8rem;">18. Jan. 2023</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:1.4rem;font-weight:600;color:var(--txt);text-transform:uppercase;line-height:1.2;margin-bottom:.8rem;">Herz · Verstand · Körper</div>
+        <div style="font-size:.88rem;color:var(--mu);line-height:1.75;margin-bottom:1.2rem;">Die offene See kann ruhig und einladend wirken und im nächsten Moment stürmisch sein. In dieser Metapher ist das Herz die See, der Geist das Schiff...</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:.25em;color:var(--red2);text-transform:uppercase;">Weiterlesen →</div>
+      </div>
+    </div>
+    </div>
+
+  <footer>
+    <div class="footer-brand">
+      <img src="https://md-wealth.github.io/Mario/img_7.jpg" alt="Terranova">
+      <p>Traditionelles Taekwon-Do in Winterthur. Teil der Taekwon-Do Terranova Familie mit 4 Standorten in der Schweiz und Deutschland.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="#" data-goto="home">Willkommen</a>
+      <a href="#" data-goto="center">Center Winterthur</a>
+      <a href="#" data-goto="videos">Videos</a>
+      <a href="#" data-goto="blog">Blog</a>
+      <a href="#" data-goto="kontakt">Kontakt</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <p>Äusserer Rettenbachweg 4<br>Osttor Raum 2, 8400 Winterthur</p>
+      <a href="tel:+41792906181">+41 79 290 61 81</a>
+      <a href="mailto:m.delena@taekwondo-zuerich.ch">m.delena@taekwondo-zuerich.ch</a>
+      <a href="https://www.instagram.com/traditionaltkdwinterthur/" target="_blank">@traditionaltkdwinterthur</a>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ══════ CENTER ══════ -->
+<div id="page-center" class="page">
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://static.wixstatic.com/media/7e456c_d4641caad0654879bd956a36447f6592~mv2.jpg/v1/fill/w_1920,h_800,al_c,q_85,enc_avif,quality_auto/7e456c_d4641caad0654879bd956a36447f6592~mv2.jpg');"></div>
+    <div class="page-hero-overlay"></div>
+    <span class="page-hero-bigtext">WIN</span>
+    <div class="page-hero-txt">
+      <p class="page-eyebrow">Schule · Standort · Team</p>
+      <h1 class="page-title">Center Winterthur</h1>
+      <p class="page-tagline">Traditionelles Taekwon-Do seit 2020</p>
+    </div>
+  </div>
+
+  <div class="content-wide">
+    <div class="center-grid">
+      <div class="center-cell">
+        <h2>Schulleiter</h2>
+        <p><strong style="color:var(--txt);">Mario D'Elena</strong>, 3. DAN, trainiert unter der Leitung von Grossmeister Terranova 5. Dan seit 2011, aktiv im Traditionellen Taekwon-Do und leitet die Schule in Winterthur.</p>
+        <div class="info-row">
+          <span class="icon">📍</span>
+          <span class="val">Äusserer Rettenbachweg 4, Osttor Raum 2, 8400 Winterthur</span>
+        </div>
+        <div class="info-row">
+          <span class="icon">📞</span>
+          <span class="val"><a href="tel:+41792906181">+41 79 290 61 81</a></span>
+        </div>
+        <div class="info-row">
+          <span class="icon">✉️</span>
+          <span class="val"><a href="mailto:m.delena@taekwondo-zuerich.ch">m.delena@taekwondo-zuerich.ch</a></span>
+        </div>
+      </div>
+      <div class="center-cell" style="padding:0;overflow:hidden;">
+        <img src="https://md-wealth.github.io/Mario/img_8.jpg" alt="Über Grenzen Hinaus" style="width:100%;height:100%;object-fit:cover;object-position:center top;min-height:380px;filter:brightness(.9);">
+      </div>
+    </div>
+
+    <h2>Stundenplan</h2>
+    <div class="stundenplan">
+      <div class="stunden-header">Trainingszeiten — Mo / Mi / Fr</div>
+      <div class="stunden-row header">
+        <div class="stunden-cell">Tag</div>
+        <div class="stunden-cell">Zeit</div>
+        <div class="stunden-cell">Gruppe</div>
+      </div>
+      <div class="stunden-row">
+        <div class="stunden-cell">Montag</div>
+        <div class="stunden-cell">18:00 Uhr</div>
+        <div class="stunden-cell">Kinder &amp; Jugendliche</div>
+      </div>
+      <div class="stunden-row">
+        <div class="stunden-cell"></div>
+        <div class="stunden-cell">19:00 Uhr</div>
+        <div class="stunden-cell">Jugendliche &amp; Erwachsene</div>
+      </div>
+      <div class="stunden-row" style="border-top:1px solid rgba(192,24,42,.25);">
+        <div class="stunden-cell">Mittwoch</div>
+        <div class="stunden-cell">17:00 Uhr</div>
+        <div class="stunden-cell">Kleinkinder</div>
+      </div>
+      <div class="stunden-row">
+        <div class="stunden-cell"></div>
+        <div class="stunden-cell">18:00 Uhr</div>
+        <div class="stunden-cell">Kinder, Familien &amp; Jugendliche</div>
+      </div>
+      <div class="stunden-row">
+        <div class="stunden-cell"></div>
+        <div class="stunden-cell">19:00 Uhr</div>
+        <div class="stunden-cell">Jugendliche &amp; Erwachsene</div>
+      </div>
+      <div class="stunden-row" style="border-top:1px solid rgba(192,24,42,.25);">
+        <div class="stunden-cell">Freitag</div>
+        <div class="stunden-cell">17:00 Uhr</div>
+        <div class="stunden-cell">Kleinkinder</div>
+      </div>
+      <div class="stunden-row">
+        <div class="stunden-cell"></div>
+        <div class="stunden-cell">18:00 Uhr</div>
+        <div class="stunden-cell">Kinder, Familien &amp; Jugendliche</div>
+      </div>
+      <div class="stunden-row">
+        <div class="stunden-cell"></div>
+        <div class="stunden-cell">19:00 Uhr</div>
+        <div class="stunden-cell">Jugendliche &amp; Erwachsene</div>
+      </div>
+    </div>
+
+
+
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--red-bd);border:1px solid var(--red-bd);margin:3rem 0;">
+      <div style="overflow:hidden;height:500px;">
+        <img src="https://md-wealth.github.io/Mario/img_9.jpg" alt="Der Weg ist das Ziel" style="width:100%;height:100%;object-fit:cover;object-position:center 15%;filter:brightness(.88);">
+      </div>
+      <div style="background:var(--bg);padding:3rem;display:flex;flex-direction:column;justify-content:center;">
+        <p style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.5em;color:var(--red2);text-transform:uppercase;margin-bottom:.8rem;">Philosophie</p>
+        <h2 style="margin:0 0 1rem;">Der Weg ist das Ziel</h2>
+        <p>Im Taekwon-Do geht es nicht nur um Technik — es geht um die Art und Weise, wie man den Weg geht. Höhenflüge und Abstürze sollen gemieden werden. Die innere Balance führt stetig voran.</p>
+        <p>Do — der Weg — ist die Lehre des bewussten Lebens. Taekwon-Do macht dich nicht nur körperlich stärker. Es formt den Charakter.</p>
+      </div>
+    </div>
+
+    <div class="probe" style="margin:3rem 0;">
+      <div><h2>Kostenlos testen</h2><p>Zwei Probetrainings sind gratis — für Kleinkinder, Kinder, Jugendliche und Erwachsene.</p></div>
+      <button class="btn-white" data-goto="kontakt">Anmelden</button>
+    </div>
+
+    <h2>Schule</h2>
+    <p>Seit September 2020 bietet die Schule im Herzen von Winterthur Unterricht am Montag, Mittwoch und Freitag für Kleinkinder, Kinder, Jugendliche und Erwachsene jeweils von 17:00 bis 20:00 Uhr an. Die Schule wächst stetig und bietet jeder Person — ob erfahren oder Anfänger — einen optimalen Einstieg.</p>
+    <img src="https://md-wealth.github.io/Mario/img_10.jpg" alt="Jeder Faden erzählt von Hingabe" style="width:100%;height:auto;display:block;filter:brightness(.9);">
+
+    
+
+
+
+
+
+    <h2>Die Terranova Familie</h2>
+    <p>Das Center Winterthur gehört zur Taekwon-Do Terranova Familie. Wir bieten an 3 Standorten in der Schweiz und einem in Freiburg (DE) 7 Tage die Woche Unterricht und Lehrgänge an.</p>
+    <p><a href="https://www.taekwondo-terranova.com/" target="_blank" style="color:var(--red2);">taekwondo-terranova.com</a></p>
+    <img src="https://md-wealth.github.io/Mario/img_11.jpg" alt="Eine Familie. Eine Tradition." style="width:100%;height:380px;object-fit:cover;filter:brightness(.9);margin:1.5rem 0;border:1px solid var(--red-bd);">
+  </div>
+
+  <footer>
+    <div class="footer-brand"><img src="https://md-wealth.github.io/Mario/img_12.jpg" alt="Terranova"><p>Traditionelles Taekwon-Do in Winterthur.</p></div>
+    <div class="footer-col"><h4>Navigation</h4><a href="#" data-goto="home">Willkommen</a><a href="#" data-goto="center">Center</a><a href="#" data-goto="videos">Videos</a><a href="#" data-goto="blog">Blog</a><a href="#" data-goto="kontakt">Kontakt</a></div>
+    <div class="footer-col"><h4>Kontakt</h4><p>Äusserer Rettenbachweg 4, 8400 Winterthur</p><a href="tel:+41792906181">+41 79 290 61 81</a></div>
+  </footer>
+
+</div>
+
+<!-- ══════ VIDEOS ══════ -->
+<div id="page-videos" class="page">
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://static.wixstatic.com/media/7e456c_f2232498a047437d942ad4ef5dcb9bfa~mv2.jpg/v1/fill/w_800,h_800,al_c,q_90,enc_avif,quality_auto/7e456c_f2232498a047437d942ad4ef5dcb9bfa~mv2.jpg');"></div>
+    <div class="page-hero-overlay"></div>
+    <span class="page-hero-bigtext">VIDEO</span>
+    <div class="page-hero-txt">
+      <p class="page-eyebrow">Technik · Training · Wettkampf</p>
+      <h1 class="page-title">Videos</h1>
+      <p class="page-tagline">Taekwon-Do in Bewegung</p>
+    </div>
+  </div>
+
+  <div class="content-wide">
+    <p class="sec-label">Center Winterthur</p>
+    <h2 class="sec-title">Unsere Videos</h2>
+    <div class="video-grid">
+      <div>
+      <iframe src="https://www.youtube.com/embed/DKBSMcG-XOE?controls=1&rel=0&modestbranding=1" title="Training" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;aspect-ratio:16/9;border:1px solid var(--red-bd);display:block;"></iframe>
+      <div class="video-label">Training</div>
+    </div>
+      <div>
+      <iframe src="https://www.youtube.com/embed/BJWKlrjufgs?controls=1&rel=0&modestbranding=1" title="Technik" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;aspect-ratio:16/9;border:1px solid var(--red-bd);display:block;"></iframe>
+      <div class="video-label">Technik</div>
+    </div>
+      <div>
+      <iframe src="https://www.youtube.com/embed/-gOEyzZFCXA?controls=1&rel=0&modestbranding=1" title="Training" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;aspect-ratio:16/9;border:1px solid var(--red-bd);display:block;"></iframe>
+      <div class="video-label">Training</div>
+    </div>
+      <div>
+      <iframe src="https://www.youtube.com/embed/rPeJzPo-aRw?controls=1&rel=0&modestbranding=1" title="Kampfkunst" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;aspect-ratio:16/9;border:1px solid var(--red-bd);display:block;"></iframe>
+      <div class="video-label">Kampfkunst</div>
+    </div>
+    </div>
+
+    <div class="divider"><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" stroke="rgba(192,24,42,.5)" stroke-width="1" fill="none"/><circle cx="6" cy="6" r="2" fill="rgba(192,24,42,.5)"/></svg></div>
+
+    <p class="sec-label">Terranova Family</p>
+    <h2 class="sec-title">Die Familie</h2>
+    <div class="video-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div>
+      <iframe src="https://www.youtube.com/embed/MAx1NHJRx2M?controls=1&rel=0&modestbranding=1" title="Terranova" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;aspect-ratio:16/9;border:1px solid var(--red-bd);display:block;"></iframe>
+      <div class="video-label">Terranova</div>
+    </div>
+      <div>
+      <iframe src="https://www.youtube.com/embed/zDekRrcxAAU?controls=1&rel=0&modestbranding=1" title="Terranova" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;aspect-ratio:16/9;border:1px solid var(--red-bd);display:block;"></iframe>
+      <div class="video-label">Terranova</div>
+    </div>
+      <div>
+      <iframe src="https://www.youtube.com/embed/W1h3rOeR-6A?controls=1&rel=0&modestbranding=1" title="Terranova" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;aspect-ratio:16/9;border:1px solid var(--red-bd);display:block;"></iframe>
+      <div class="video-label">Terranova</div>
+    </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-brand"><img src="https://md-wealth.github.io/Mario/img_13.jpg" alt="Terranova"><p>Traditionelles Taekwon-Do in Winterthur.</p></div>
+    <div class="footer-col"><h4>Navigation</h4><a href="#" data-goto="home">Willkommen</a><a href="#" data-goto="center">Center</a><a href="#" data-goto="videos">Videos</a><a href="#" data-goto="blog">Blog</a><a href="#" data-goto="kontakt">Kontakt</a></div>
+    <div class="footer-col"><h4>Kontakt</h4><p>Äusserer Rettenbachweg 4, 8400 Winterthur</p><a href="tel:+41792906181">+41 79 290 61 81</a></div>
+  </footer>
+
+</div>
+
+<!-- ══════ BLOG ══════ -->
+<div id="page-blog" class="page">
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://static.wixstatic.com/media/7e456c_31d3cdcfec68402aab63b827e0c3fd24~mv2.jpg/v1/fill/w_1920,h_900,al_c,q_85,enc_avif,quality_auto/7e456c_31d3cdcfec68402aab63b827e0c3fd24~mv2.jpg');"></div>
+    <div class="page-hero-overlay"></div>
+    <span class="page-hero-bigtext">BLOG</span>
+    <div class="page-hero-txt">
+      <p class="page-eyebrow">Taekwon-Do · Philosophie · Leben</p>
+      <h1 class="page-title">Blog</h1>
+      <p class="page-tagline">Gedanken aus der Matte</p>
+    </div>
+  </div>
+
+  <div class="content-wide">
+    <div class="blog-grid">
+      <div class="blog-card" data-goto="blog-bewusstsein">
+        <div class="blog-card-img"><img src="https://static.wixstatic.com/media/7e456c_51fe0f5f80bb4e988d900b4023981ec7~mv2.jpg/v1/fill/w_800,h_600,al_c,q_90,enc_avif,quality_auto/7e456c_51fe0f5f80bb4e988d900b4023981ec7~mv2.jpg" alt=""></div>
+        <div class="blog-card-body">
+          <div class="blog-card-date">12. Juni 2023</div>
+          <div class="blog-card-title">Bewusstsein · Gewohnheiten · Ebenen</div>
+          <div class="blog-card-excerpt">Einfach mal seine Gewohnheiten anzupassen ist etwas, das wenige können. Durch mentale Stärke ist es möglich. Doch die meisten Personen sind wie mechanisch an Gewohnheiten gebunden...</div>
+          <div class="blog-card-read">Weiterlesen →</div>
+        </div>
+      </div>
+      <div class="blog-card" data-goto="blog-herz">
+        <div class="blog-card-img"><img src="https://static.wixstatic.com/media/7e456c_f32acebb96a8418daaf1b6d033445964~mv2.jpg/v1/fill/w_800,h_600,al_c,q_90,enc_avif,quality_auto/7e456c_f32acebb96a8418daaf1b6d033445964~mv2.jpg" alt=""></div>
+        <div class="blog-card-body">
+          <div class="blog-card-date">18. Jan. 2023</div>
+          <div class="blog-card-title">Herz · Verstand · Körper</div>
+          <div class="blog-card-excerpt">Die offene See kann ruhig und einladend wirken und im nächsten Moment stürmisch und angsteinflössend sein. Bei hohem Wellengang ist es ein Wagnis, ein Schiff durch den Sturm zu navigieren...</div>
+          <div class="blog-card-read">Weiterlesen →</div>
+        </div>
+      </div>
+      <div class="blog-card" data-goto="blog-loslassen">
+        <div class="blog-card-img"><img src="https://static.wixstatic.com/media/7e456c_d62e6f9a5028444f98e7eda3cf44edbe~mv2.png/v1/fill/w_800,h_600,al_c,q_90,enc_avif,quality_auto/7e456c_d62e6f9a5028444f98e7eda3cf44edbe~mv2.png" alt=""></div>
+        <div class="blog-card-body">
+          <div class="blog-card-date">1. Dez. 2022</div>
+          <div class="blog-card-title">Loslassen · Vergangenheit · Abtauchen</div>
+          <div class="blog-card-excerpt">Was hindert uns daran, uns etwas Neuem vollumfänglich hinzugeben? Der erste Schritt ist oftmals schwierig. Eine neue Tätigkeit, ein neues Hobby, eine neue Partnerschaft einzugehen braucht Mut...</div>
+          <div class="blog-card-read">Weiterlesen →</div>
+        </div>
+      </div>
+      <div class="blog-card" data-goto="blog-gesetze">
+        <div class="blog-card-img"><img src="https://static.wixstatic.com/media/7e456c_b9e74a61486f44bf9f09c7612cceb143~mv2.jpg/v1/fill/w_800,h_600,al_c,q_90,enc_avif,quality_auto/7e456c_b9e74a61486f44bf9f09c7612cceb143~mv2.jpg" alt=""></div>
+        <div class="blog-card-body">
+          <div class="blog-card-date">22. Nov. 2022</div>
+          <div class="blog-card-title">Gesetze · Energie · Transformation</div>
+          <div class="blog-card-excerpt">Habt ihr euch schonmal gefragt, warum Taekwon-Do oder Yoga hohe Mitgliederbeiträge hat, gerade im Vergleich mit einer Sportart wie Fussball?...</div>
+          <div class="blog-card-read">Weiterlesen →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-brand"><img src="https://md-wealth.github.io/Mario/img_14.jpg" alt="Terranova"><p>Traditionelles Taekwon-Do in Winterthur.</p></div>
+    <div class="footer-col"><h4>Navigation</h4><a href="#" data-goto="home">Willkommen</a><a href="#" data-goto="center">Center</a><a href="#" data-goto="videos">Videos</a><a href="#" data-goto="blog">Blog</a><a href="#" data-goto="kontakt">Kontakt</a></div>
+    <div class="footer-col"><h4>Kontakt</h4><p>Äusserer Rettenbachweg 4, 8400 Winterthur</p><a href="tel:+41792906181">+41 79 290 61 81</a></div>
+  </footer>
+
+</div>
+
+<!-- ══════ BLOG POST 1 ══════ -->
+<div id="page-blog-bewusstsein" class="page">
+  <div class="content" style="padding-top:6rem;">
+    <button class="blog-back" data-goto="blog">← Zurück zum Blog</button>
+    <h1 class="blog-post-title">Bewusstsein · Gewohnheiten · Ebenen</h1>
+    <div class="blog-post-meta">12. Juni 2023 &nbsp;·&nbsp; monade-btc &nbsp;·&nbsp; 2 Min. Lesezeit</div>
+    <img class="blog-post-img" src="https://static.wixstatic.com/media/7e456c_51fe0f5f80bb4e988d900b4023981ec7~mv2.jpg/v1/fill/w_800,h_600,al_c,q_90,enc_avif,quality_auto/7e456c_51fe0f5f80bb4e988d900b4023981ec7~mv2.jpg" alt="">
+    <p>Einfach mal seine Gewohnheiten anzupassen ist etwas, das wenige können. Durch mentale Stärke ist es möglich. Doch die meisten Personen sind wie mechanisch an Gewohnheiten gebunden und die bewusste Anpassung eben dieser scheint unmöglich.</p>
+    <p>Menschen sind Wesen, die auf mehreren Ebenen existieren, und diese zu kennen ist essenziell, damit wir ein Problem nicht auf der selben Ebene angehen, auf dem es entstanden ist.</p>
+    <p>Ergo: wer die Gewohnheit hat, früh morgens als erstes einen Kaffee zu trinken, und das ändern will, der probiert oftmals einfach den Kaffee wegzulassen. Ein Ansatz auf der selben Ebene. Die vorkommenden Ebenen werden schlichtweg ignoriert — sind sie ja auch den meisten Menschen unbekannt, jedoch sind es diese, die den Impuls geben, früh morgens Kaffee zu trinken. Der Gewohnheit geht ein Gedanke voraus, der sich festgewurzelt hat.</p>
+    <div class="blog-quote">„Ich brauche Kaffee, dass ich überhaupt in die Gänge komme!" — Immer wenn das jemand sagt, frage ich scherzend: „ach was, funktionieren bei dir kalte Duschen nicht?" Die Reaktionen sind immer amüsant.</div>
+    <h3>Die Ebenen — in Kürze</h3>
+    <p>Zeit führt zu Wissen &rarr; Wissen zur Vorstellung &rarr; Vorstellung zum Gedanken &rarr; Gedanken zur Wurzel &rarr; Wurzel zur Gewohnheit &rarr; Gewohnheit zur Form.</p>
+    <p><em>Die Reihenfolge ist wichtig für den Kreationsprozess!</em></p>
+    <p>Wer eine Gewohnheit nun auf der selben Ebene verändern will, ignoriert 4 vorhergehende und ist zum Scheitern verurteilt!</p>
+    <h3>Der bewusste Ansatz</h3>
+    <p>Als erstes muss Zeit investiert werden, um sich das Wissen anzueignen, dass Kaffee innerhalb der ersten Stunde des Tages konsumiert mit der natürlichen Cortisol-Produktion des Körpers spielt. Was dazu führt, dass unser Körper über Zeit nicht mehr fähig ist, selber Cortisol zu produzieren — und deshalb wird Kaffee zur Notwendigkeit.</p>
+    <p>Morgenlicht der Sonne über die Augen regt Cortisol an, sowie eine kalte Dusche. Bewegung! Ein Spaziergang während dem Sonnenaufgang kann alles kombinieren. Die Vorstellung vom Kaffee am Morgen wird langsam zerstört und die Vorstellung von wahrer Wachheit und Energie nimmt Form an.</p>
+    <p>Wenn nun das Wissen vorhanden ist, wieso Kaffee mir Energie raubt wenn ich ihn in der ersten Stunde konsumiere — und wie ich tatsächlich morgens wach werden kann — wird die Vorstellung, dass ich nach dem Aufstehen sofort Kaffee brauche, lächerlich wirken. Der Gedanke verschwindet und somit auch die uns selbst auferlegte Wurzel.</p>
+    <p>Die Gewohnheit kann nun ersetzt werden durch neue Tätigkeiten, die nachhaltig Wirkung zeigen: Guter Schlaf, Morgensonne, kaltes Duschen, Bewegung. Und so wird die Gewohnheit zur Form — <em>sofern wir auch die Disziplin haben, diese aufrecht zu erhalten.</em></p>
+    <p style="font-style:italic;color:var(--mu);">— MonaD'E</p>
+    <div class="page-nav">
+      <button class="pnbtn" data-goto="blog"><span class="dir">← Zurück</span><span class="nm">Blog</span></button>
+      <button class="pnbtn right" data-goto="blog-herz"><span class="dir">Nächster →</span><span class="nm">Herz · Verstand · Körper</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ BLOG POST 2 ══════ -->
+<div id="page-blog-herz" class="page">
+  <div class="content" style="padding-top:6rem;">
+    <button class="blog-back" data-goto="blog">← Zurück zum Blog</button>
+    <h1 class="blog-post-title">Herz · Verstand · Körper</h1>
+    <div class="blog-post-meta">18. Jan. 2023 &nbsp;·&nbsp; monade-btc &nbsp;·&nbsp; 2 Min. Lesezeit</div>
+    <img class="blog-post-img" src="https://static.wixstatic.com/media/7e456c_f32acebb96a8418daaf1b6d033445964~mv2.jpg/v1/fill/w_800,h_600,al_c,q_90,enc_avif,quality_auto/7e456c_f32acebb96a8418daaf1b6d033445964~mv2.jpg" alt="">
+    <blockquote>Die offene See kann ruhig und einladend wirken und im nächsten Moment stürmisch und angsteinflössend sein. Bei hohem Wellengang ist es ein Wagnis, ein Schiff durch den Sturm zu navigieren — und wie das Schiff werden die Passagiere hin und her gewirbelt.</blockquote>
+    <p>In dieser Metapher ist das Herz die See, das Schiff unser Geist und die Passagiere unser Körper. Unsere Emotionen beruhigen zu lernen ist schlussfolgernd von hoher Wichtigkeit.</p>
+    <img class="blog-post-img" src="https://static.wixstatic.com/media/7e456c_e1831bc4efc8426a894520442499c689~mv2.jpg/v1/fill/w_800,h_600,al_c,q_90,enc_avif,quality_auto/7e456c_e1831bc4efc8426a894520442499c689~mv2.jpg" alt="" style="height:260px;">
+    <p>Im Taekwon-Do gilt, beim Betreten der Matte, die Einstellung nur an die Tätigkeit zu wenden und jegliche Beziehung zur nächsten Person zu vergessen. Emotionale Auf und Abs sind genau so ein Verlust der eigenen Beherrschung wie wenn einem bei der Arbeit der Kragen platzt. In den Worten von Grossmeister Kwon:</p>
+    <div class="blog-quote">„Auch jene Geisteshaltung soll erreicht werden, in der wir uns von allen Dingen lösen, die den Geist oder das intuitive Einsichtsvermögen hindern und einengen. Dazu gehören positive oder negative Anteilnahme an der uns umgebenden Welt, wie etwa Liebe und Hass, Zuneigung oder Abscheu, Sympathie oder Gleichgültigkeit usw. Ferner soll jede Gemütsbewegung ausgeschaltet werden, da auch sie eine Voreingenommenheit bedeutet."<br><em style="font-size:.85rem;">— Kwon, Jae-Hwa, Zen Kunst der Selbstverteidigung</em></div>
+    <p>Sind meine Emotionen ausser Kontrolle, herrscht hoher Wellengang, das Schiff zu navigieren (unser Verstand) wird verunmöglicht — und die Folge daraus ist, dass das Schiff (unser Körper) an einen Ort geführt wird, der nicht unserem ursprünglichen Ideal entspricht. <em>Fehlt uns die emotionale Ruhe, sind unsere Ziele unerreichbar.</em></p>
+    <p>Nicht umsonst ist Do die Lehre des Weges. Die Art und Weise wie der Weg gegangen wird, steht im Fokus. Höhenflüge sowie Abstürze sollen gemieden werden. Die innere Balance führt stetig voran und alle Arten von Ungleichgewicht — wie übertriebener Ehrgeiz oder Gier — können mit diesem Verständnis vermieden werden.</p>
+    <p>Zwischen Höhen und Tiefen finden wir die Mitte, zwischen Zukunft und Vergangenheit das Jetzt, zwischen Himmel und Erde den Menschen, zwischen Geist und Materie das Herz. Wer seinen Weg mittig, im Jetzt seiend, menschlich und mit Herz begeht, wird sicherlich ein erfülltes Leben führen.</p>
+    <p style="font-style:italic;color:var(--mu);">— Monade</p>
+    <div class="page-nav">
+      <button class="pnbtn" data-goto="blog-bewusstsein"><span class="dir">← Vorheriger</span><span class="nm">Bewusstsein</span></button>
+      <button class="pnbtn right" data-goto="blog-loslassen"><span class="dir">Nächster →</span><span class="nm">Loslassen</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ BLOG POST 3 ══════ -->
+<div id="page-blog-loslassen" class="page">
+  <div class="content" style="padding-top:6rem;">
+    <button class="blog-back" data-goto="blog">← Zurück zum Blog</button>
+    <h1 class="blog-post-title">Loslassen · Vergangenheit · Abtauchen</h1>
+    <div class="blog-post-meta">1. Dez. 2022 &nbsp;·&nbsp; monade-btc &nbsp;·&nbsp; 2 Min. Lesezeit</div>
+    <img class="blog-post-img" src="https://static.wixstatic.com/media/7e456c_d62e6f9a5028444f98e7eda3cf44edbe~mv2.png/v1/fill/w_800,h_600,al_c,q_90,enc_avif,quality_auto/7e456c_d62e6f9a5028444f98e7eda3cf44edbe~mv2.png" alt="">
+    <blockquote>Was hindert uns daran, uns etwas Neuem vollumfänglich hinzugeben?</blockquote>
+    <p>Der erste Schritt ist oftmals schwierig. Eine neue Tätigkeit, ein neues Hobby, eine neue Partnerschaft einzugehen braucht Mut. Ist dieser Schritt getan, folgt jedoch eine weitaus schwierigere Aufgabe: <em>Loslassen.</em></p>
+    <p>Wir halten daran fest, wer wir zu sein meinen. Veraltete Glaubenssätze und Gewohnheiten hindern uns daran, zu der Person zu werden, die wir uns vorstellen. Wurzeln, die in der Vergangenheit geschlagen wurden und nicht mehr zweckmässig sind, müssen entrissen werden, damit wir abtauchen können.</p>
+    <div class="blog-quote">„Ich bin unbeweglich, ich bin zu alt, ich bin müde, ich bin energielos, ich bin langsam — ich hatte eine Knieverletzung." Mit unseren eigenen Definitionen entkräften wir uns und halten an unzweckmässigen Wurzeln fest.</div>
+    <p>Es mag durchaus sein, dass einer oder auch mehrere der oben stehenden Punkte zutreffen — aber was bringt es uns, daran festzuhalten und diese immer wieder zu suggerieren? Ob positive Autosuggestion funktioniert, muss wohl jeder für sich selbst entscheiden. Was bestimmt hilft, ist es, negative Selbstgespräche zu verhindern, welche uns festwurzeln und dabei hindern, zu erreichen, was wir uns wünschen.</p>
+    <blockquote>Ein Gedanke, der Wurzeln schlägt, genügt, um eine neue Person zu werden.</blockquote>
+    <p>Wer will, der kann. Ich will, ich muss, ich kann. Wer gibt, bekommt. Das Schwerste ist das Beste — nicht nur sagen, sondern auch machen. Dies sind Aussagen, die wir im Taekwon-Do immer wieder hören und nutzen. Glaubenssätze, die zweckmässig sind und die Praktizierenden mit der Tätigkeit einstimmen.</p>
+    <blockquote>Wie gross wären deine Träume, wenn du wüsstest, dass du nicht scheitern kannst?</blockquote>
+    <p>Wer neu anfängt, oder seit Jahren trainiert und nicht die gewünschte Verwandlung wahrnimmt, tut gut daran, seine Glaubenssätze zu prüfen. Entsprechen sie der Tätigkeit, oder halte ich an der Vergangenheit fest? Wer bereit ist, das Vergangene loszulassen und vollends abtaucht im Taekwon-Do, dem wird sich eine Welt der Faszination eröffnen. <em>Das garantiere ich.</em></p>
+    <p style="font-style:italic;color:var(--mu);">— Monade</p>
+    <div class="page-nav">
+      <button class="pnbtn" data-goto="blog-herz"><span class="dir">← Vorheriger</span><span class="nm">Herz · Verstand</span></button>
+      <button class="pnbtn right" data-goto="blog-gesetze"><span class="dir">Nächster →</span><span class="nm">Gesetze</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ BLOG POST 4 ══════ -->
+<div id="page-blog-gesetze" class="page">
+  <div class="content" style="padding-top:6rem;">
+    <button class="blog-back" data-goto="blog">← Zurück zum Blog</button>
+    <h1 class="blog-post-title">Gesetze · Energie · Transformation</h1>
+    <div class="blog-post-meta">22. Nov. 2022 &nbsp;·&nbsp; monade-btc &nbsp;·&nbsp; 2 Min. Lesezeit</div>
+    <img class="blog-post-img" src="https://static.wixstatic.com/media/7e456c_b9e74a61486f44bf9f09c7612cceb143~mv2.jpg/v1/fill/w_800,h_600,al_c,q_90,enc_avif,quality_auto/7e456c_b9e74a61486f44bf9f09c7612cceb143~mv2.jpg" alt="">
+    <blockquote>„Das Gesetz des gleichwertigen Austauschs"</blockquote>
+    <p>Habt ihr euch schonmal gefragt, warum Taekwon-Do oder Yoga hohe Mitgliederbeiträge hat, gerade im Vergleich mit einer Sportart wie Fussball? Sind Meister abhängig von Geldern, die Mitglieder übergeben, um zu überleben? Wohl kaum. Das Gegenteil ist der Fall. Meister könnten in jedem anderen Bereich mit weniger Aufwand mehr Einkommen generieren. Und trotzdem ist Taekwon-Do nicht gratis, trotz der guten Absicht und der finanziellen Freiheit des Lehrmeisters. Warum?</p>
+    <div class="blog-quote">Was nichts kostet, hat keinen Wert.</div>
+    <p>Stell dir vor, ein Seminar ist gratis. Entsprechend erwartest du nicht viel — aber gehst vorbei. Deine ganze Vorbereitung weist auf die Wertlosigkeit des Seminars hin. Nehmen wir dasselbe Seminar, nun kostet es aber 5'000 CHF und eine durchaus erfolgreiche Person — z.B. Tony Robbins — leitet es. Auf einmal ändert sich deine Einstellung vollständig. Den Wert aber hast <em>du</em> der Sache gegeben.</p>
+    <blockquote>Welcher Wert hat deine Transformation?</blockquote>
+    <p>Ein Lehrmeister benötigt keine grossen Geldsummen, um dich zu unterrichten — aber <em>du</em> benötigst diese, um der Sache den entsprechenden Wert zuzugestehen. Da wo eine energetische Imbalance besteht, nämlich zwischen deiner Ist-Situation und der Soll-Situation deines Vorbilds / Lehrmeisters, findet ein Austausch statt, um das Gleichgewicht herzustellen.</p>
+    <blockquote>Damit wir etwas erhalten können (die Transformation), müssen wir etwas von gleichem Wert zum Austausch geben.</blockquote>
+    <p>Das Gesetz des gleichwertigen Austauschs gibt uns relativ einfach zu verstehen, warum es für uns als Schüler wichtig ist, ein möglichst wertvolles Tauschmittel darzubieten — da wir einem alchimistischen Prozess der Umwandlung teilhaben. Ist der Unterricht gratis, so tritt auch niemals eine Verwandlung ein, da lange bevor dies der Fall sein könnte, das Handtuch geworfen wird.</p>
+    <p>Glaubst du an die Möglichkeit der Transformation? Was ist sie dir wert?</p>
+    <p style="font-style:italic;color:var(--mu);">— Monade</p>
+    <div class="page-nav">
+      <button class="pnbtn" data-goto="blog-loslassen"><span class="dir">← Vorheriger</span><span class="nm">Loslassen</span></button>
+      <button class="pnbtn right" data-goto="blog"><span class="dir">Alle Beiträge →</span><span class="nm">Blog</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ KONTAKT ══════ -->
+<div id="page-kontakt" class="page">
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://md-wealth.github.io/Mario/img_15.jpg');background-position:center top;"></div>
+    <div class="page-hero-overlay"></div>
+    <span class="page-hero-bigtext">KON</span>
+    <div class="page-hero-txt">
+      <p class="page-eyebrow">Anmeldung · Probetraining · Fragen</p>
+      <h1 class="page-title">Kontakt</h1>
+      <p class="page-tagline">Wir freuen uns auf dich</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:3rem;">
+      <div>
+        <h2>Schreib uns</h2>
+        <div class="info-row">
+          <span class="icon">📍</span>
+          <span class="val">Äusserer Rettenbachweg 4<br>Osttor Raum 2<br>8400 Winterthur</span>
+        </div>
+        <div class="info-row">
+          <span class="icon">📞</span>
+          <span class="val"><a href="tel:+41792906181" style="color:var(--red2);">+41 79 290 61 81</a></span>
+        </div>
+        <div class="info-row">
+          <span class="icon">✉️</span>
+          <span class="val"><a href="mailto:m.delena@taekwondo-zuerich.ch" style="color:var(--red2);">m.delena@taekwondo-zuerich.ch</a></span>
+        </div>
+        <div class="info-row">
+          <span class="icon">📸</span>
+          <span class="val"><a href="https://www.instagram.com/traditionaltkdwinterthur/" target="_blank" style="color:var(--red2);">@traditionaltkdwinterthur</a></span>
+        </div>
+        <div style="margin-top:2rem;">
+          <h3>Trainingszeiten</h3>
+          <p style="font-size:.9rem;line-height:2.1;">
+            <strong style="color:var(--txt);">Montag</strong><br>
+            18:00 Uhr · Kinder &amp; Jugendliche<br>
+            19:00 Uhr · Jugendliche &amp; Erwachsene<br><br>
+            <strong style="color:var(--txt);">Mittwoch &amp; Freitag</strong><br>
+            17:00 Uhr · Kleinkinder<br>
+            18:00 Uhr · Kinder, Familien &amp; Jugendliche<br>
+            19:00 Uhr · Jugendliche &amp; Erwachsene
+          </p>
+          <p style="color:var(--mu);font-size:.9rem;">2 Probetrainings kostenlos &amp; unverbindlich</p>
+        </div>
+      </div>
+      <div>
+        <h2>Anmeldeformular</h2>
+        <form name="probetraining" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display:flex;flex-direction:column;gap:1rem;">
+          <input type="hidden" name="form-name" value="probetraining">
+          <input type="hidden" name="bot-field" style="display:none;">
+
+          <div>
+            <label style="font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:.3em;color:var(--mu);text-transform:uppercase;display:block;margin-bottom:.4rem;">Name *</label>
+            <input type="text" name="name" required placeholder="Dein Name" style="width:100%;background:var(--bg2);border:1px solid var(--red-bd);color:var(--txt);padding:.8rem 1rem;font-family:'Lato',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red2)'" onblur="this.style.borderColor='var(--red-bd)'">
+          </div>
+          <div>
+            <label style="font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:.3em;color:var(--mu);text-transform:uppercase;display:block;margin-bottom:.4rem;">E-Mail *</label>
+            <input type="email" name="email" required placeholder="deine@email.ch" style="width:100%;background:var(--bg2);border:1px solid var(--red-bd);color:var(--txt);padding:.8rem 1rem;font-family:'Lato',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red2)'" onblur="this.style.borderColor='var(--red-bd)'">
+          </div>
+          <div>
+            <label style="font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:.3em;color:var(--mu);text-transform:uppercase;display:block;margin-bottom:.4rem;">Telefon</label>
+            <input type="tel" name="telefon" placeholder="+41 79 000 00 00" style="width:100%;background:var(--bg2);border:1px solid var(--red-bd);color:var(--txt);padding:.8rem 1rem;font-family:'Lato',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red2)'" onblur="this.style.borderColor='var(--red-bd)'">
+          </div>
+          <div>
+            <label style="font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:.3em;color:var(--mu);text-transform:uppercase;display:block;margin-bottom:.4rem;">Interesse</label>
+            <select name="interesse" style="width:100%;background:var(--bg2);border:1px solid var(--red-bd);color:var(--txt);padding:.8rem 1rem;font-family:'Lato',sans-serif;font-size:.9rem;outline:none;appearance:none;">
+              <option value="probetraining">Probetraining buchen</option>
+              <option value="kinder">Kurs für mein Kind</option>
+              <option value="erwachsene">Kurs für Erwachsene</option>
+              <option value="kleinkinder">Kleinkinder-Kurs</option>
+              <option value="frage">Allgemeine Frage</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:.3em;color:var(--mu);text-transform:uppercase;display:block;margin-bottom:.4rem;">Nachricht</label>
+            <textarea name="nachricht" rows="4" placeholder="Ich möchte ein Probetraining buchen..." style="width:100%;background:var(--bg2);border:1px solid var(--red-bd);color:var(--txt);padding:.8rem 1rem;font-family:'Lato',sans-serif;font-size:.9rem;outline:none;resize:vertical;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red2)'" onblur="this.style.borderColor='var(--red-bd)'"></textarea>
+          </div>
+          <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+            <button type="submit" class="btn-red">Nachricht senden</button>
+            <p style="font-size:.8rem;color:var(--mu);margin:0;">Oder direkt: <a href="mailto:m.delena@taekwondo-zuerich.ch" style="color:var(--red2);">m.delena@taekwondo-zuerich.ch</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="probe">
+      <div><h2>Jetzt einsteigen</h2><p>2 Probetrainings gratis — für jedes Alter, für jeden Fitnesslevel.</p></div>
+      <a href="mailto:m.delena@taekwondo-zuerich.ch" class="btn-white" style="text-decoration:none;display:inline-block;">E-Mail schreiben</a>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-brand"><img src="https://md-wealth.github.io/Mario/img_16.jpg" alt="Terranova"><p>Traditionelles Taekwon-Do in Winterthur.</p></div>
+    <div class="footer-col"><h4>Navigation</h4><a href="#" data-goto="home">Willkommen</a><a href="#" data-goto="center">Center</a><a href="#" data-goto="videos">Videos</a><a href="#" data-goto="blog">Blog</a><a href="#" data-goto="kontakt">Kontakt</a></div>
+    <div class="footer-col"><h4>Kontakt</h4><p>Äusserer Rettenbachweg 4, 8400 Winterthur</p><a href="tel:+41792906181">+41 79 290 61 81</a><a href="mailto:m.delena@taekwondo-zuerich.ch">m.delena@taekwondo-zuerich.ch</a></div>
+  </footer>
+</div>
+
+<!-- IMPRESSUM PAGE -->
+<div id="page-impressum" class="page">
+  <div class="page-hero" style="background:var(--bg2);">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-bigtext">LEGAL</div>
+    <div class="page-hero-txt">
+      <div class="page-eyebrow">Rechtliches</div>
+      <h1 class="page-title">Impressum</h1>
+      <p class="page-tagline">Angaben gemäss Art. 28 ZGB</p>
+    </div>
+  </div>
+  <div class="content">
+    <h2>Kontaktadresse</h2>
+    <p>Taekwon-Do Terranova Winterthur<br>
+    Mario De Lena<br>
+    Äusserer Rettenbachweg 4<br>
+    8400 Winterthur<br>
+    Schweiz</p>
+
+    <h3>Kontakt</h3>
+    <p>
+      Telefon: <a href="tel:+41792906181" style="color:var(--red2);text-decoration:none;">+41 79 290 61 81</a><br>
+      E-Mail: <a href="mailto:m.delena@taekwondo-zuerich.ch" style="color:var(--red2);text-decoration:none;">m.delena@taekwondo-zuerich.ch</a>
+    </p>
+
+    <div class="divider"><svg width="12" height="12" viewBox="0 0 12 12"><polygon points="6,0 12,6 6,12 0,6" fill="rgba(192,24,42,.4)"/></svg></div>
+
+    <h2>Haftungsausschluss</h2>
+    <p>Der Autor übernimmt keine Gewähr für die Richtigkeit, Genauigkeit, Aktualität, Zuverlässigkeit und Vollständigkeit der Informationen auf dieser Website. Haftungsansprüche gegen den Autor wegen Schäden materieller oder immaterieller Art, die aus dem Zugriff oder der Nutzung bzw. Nichtnutzung der veröffentlichten Informationen entstanden sind, werden ausgeschlossen.</p>
+
+    <h3>Links</h3>
+    <p>Verweise und Links auf Websites Dritter liegen ausserhalb des Verantwortungsbereichs des Autors. Der Autor distanziert sich ausdrücklich von sämtlichen Inhalten, auf die von dieser Website aus verlinkt wird.</p>
+
+    <h3>Urheberrechte</h3>
+    <p>Die Urheber- und alle anderen Rechte an Inhalten, Bildern, Fotos oder anderen Dateien auf dieser Website gehören ausschliesslich Taekwon-Do Terranova Winterthur oder den namentlich genannten Rechtsinhabern. Die Verwendung dieser Inhalte bedarf der schriftlichen Zustimmung des Autors.</p>
+
+    <div class="infobox" style="margin-top:3rem;">
+      <div class="il">Hinweis</div>
+      <p style="margin:0;">Quelle: <a href="https://www.swissanwalt.ch" target="_blank" rel="noopener" style="color:var(--red2);text-decoration:none;">SwissAnwalt</a></p>
+    </div>
+
+    <div class="page-nav">
+      <button class="pnbtn" data-goto="kontakt"><span class="dir">← Zurück</span><span class="nm">Kontakt</span></button>
+      <button class="pnbtn right" data-goto="datenschutz"><span class="dir">Weiter →</span><span class="nm">Datenschutz</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- DATENSCHUTZ PAGE -->
+<div id="page-datenschutz" class="page">
+  <div class="page-hero" style="background:var(--bg2);">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-bigtext">PRIVACY</div>
+    <div class="page-hero-txt">
+      <div class="page-eyebrow">Rechtliches</div>
+      <h1 class="page-title">Datenschutz</h1>
+      <p class="page-tagline">Datenschutzerklärung gemäss nDSG</p>
+    </div>
+  </div>
+  <div class="content">
+    <h2>Datenschutzerklärung</h2>
+    <p>Gestützt auf Art. 13 der schweizerischen Bundesverfassung und den datenschutzrechtlichen Bestimmungen des Bundes (Datenschutzgesetz, DSG) hat jede Person Anspruch auf Schutz ihrer Privatsphäre sowie auf Schutz vor Missbrauch ihrer persönlichen Daten. Wir halten diese Bestimmungen ein. Persönliche Daten werden streng vertraulich behandelt und weder an Dritte verkauft noch weitergegeben.</p>
+
+    <div class="divider"><svg width="12" height="12" viewBox="0 0 12 12"><polygon points="6,0 12,6 6,12 0,6" fill="rgba(192,24,42,.4)"/></svg></div>
+
+    <h2>Verantwortliche Stelle</h2>
+    <p>Taekwon-Do Terranova Winterthur<br>
+    Mario De Lena<br>
+    Äusserer Rettenbachweg 4, 8400 Winterthur<br>
+    E-Mail: <a href="mailto:m.delena@taekwondo-zuerich.ch" style="color:var(--red2);text-decoration:none;">m.delena@taekwondo-zuerich.ch</a></p>
+
+    <h3>Erhebung und Verarbeitung von Daten</h3>
+    <p>Beim Besuch dieser Website werden automatisch technische Daten wie IP-Adresse, Browser-Typ und Zugriffszeit temporär erfasst. Diese Daten dienen ausschliesslich der Sicherstellung eines störungsfreien Betriebs der Website und werden nicht zur Identifizierung von Personen verwendet.</p>
+
+    <h3>Kontaktformular / E-Mail</h3>
+    <p>Wenn Sie uns per E-Mail oder über das Kontaktformular kontaktieren, werden die übermittelten Daten (Name, E-Mail-Adresse, Nachricht) ausschliesslich zur Bearbeitung Ihrer Anfrage gespeichert und verwendet. Eine Weitergabe an Dritte findet nicht statt.</p>
+
+    <h3>Cookies</h3>
+    <p>Diese Website verwendet keine Tracking-Cookies oder Analyse-Dienste von Drittanbietern. Es werden ausschliesslich technisch notwendige Cookies eingesetzt, die für den Betrieb der Website erforderlich sind.</p>
+
+    <h3>Google Fonts</h3>
+    <p>Diese Website verwendet Google Fonts zur einheitlichen Darstellung von Schriften. Beim Laden der Seite werden Schriftdaten von Google-Servern abgerufen. Dabei kann Ihre IP-Adresse an Google übermittelt werden. Weitere Informationen finden Sie unter <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="color:var(--red2);text-decoration:none;">policies.google.com/privacy</a>.</p>
+
+    <h3>Rechte der betroffenen Personen</h3>
+    <p>Sie haben das Recht auf Auskunft über Ihre bei uns gespeicherten Daten sowie das Recht auf Berichtigung, Löschung und Einschränkung der Verarbeitung. Anfragen richten Sie bitte per E-Mail an <a href="mailto:m.delena@taekwondo-zuerich.ch" style="color:var(--red2);text-decoration:none;">m.delena@taekwondo-zuerich.ch</a>.</p>
+
+    <div class="infobox" style="margin-top:3rem;">
+      <div class="il">Gültig ab</div>
+      <p style="margin:0;">Januar 2026 — Diese Datenschutzerklärung kann jederzeit angepasst werden.</p>
+    </div>
+
+    <div class="page-nav">
+      <button class="pnbtn" data-goto="impressum"><span class="dir">← Zurück</span><span class="nm">Impressum</span></button>
+      <button class="pnbtn right" data-goto="home"><span class="dir">Zurück zur</span><span class="nm">Startseite</span></button>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+(function(){
+  var cur='home';
+  function go(id){
+    document.getElementById('page-'+cur).classList.remove('active');
+    document.getElementById('page-'+id).classList.add('active');
+    cur=id;
+    document.querySelectorAll('.nav-links button').forEach(function(b){
+      var t=b.getAttribute('data-goto');
+      b.classList.toggle('active', t===id || (id.startsWith('blog-') && t==='blog'));
+    });
+    window.scrollTo(0,0);
+  }
+  document.addEventListener('click',function(e){
+    var el=e.target;
+    while(el&&el!==document.body){
+      var g=el.getAttribute('data-goto');
+      if(g){e.preventDefault();go(g);return;}
+      el=el.parentElement;
+    }
+  });
+})();
+</script>
+</body>
+</html>
